@@ -87,6 +87,7 @@ backend/*.py
 admin/*.py
 admin/deploy.ps1
 scripts/*.py
+!scripts/check_public_source.py
 docs/SMS_SETUP.md
 
 # Unrelated exports, caches and local reports

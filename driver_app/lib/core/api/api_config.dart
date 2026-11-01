@@ -17,7 +17,10 @@ abstract final class ApiConfig {
   static const String themeModeKey = 'driver_theme_mode_v1';
   static const String navAppKey = 'driver_nav_app_v1';
 
-  static String _baseUrl = defaultBaseUrl;
+  static String _baseUrl = defaultBaseUrl
+      .trim()
+      .replaceAll(RegExp(r'/+$'), '')
+      .replaceFirst(RegExp(r'/api$'), '');
   static bool _useMock = false;
 
   static String get baseUrl => _baseUrl;

@@ -24,6 +24,11 @@ test('API base URL is normalized and a server change clears credentials', () => 
   assert.throws(() => api.setBaseUrl('javascript:alert(1)'));
 });
 
+test('local admin uses the same-origin API proxy by default', () => {
+  const api = setup(() => {});
+  assert.equal(api.getBaseUrl(), 'http://localhost:8080/api');
+});
+
 test('simultaneous duplicate reads share one request', async () => {
   let count = 0;
   const api = setup(async () => { count++; return new Response('{"drivers":[]}', { status: 200 }); });

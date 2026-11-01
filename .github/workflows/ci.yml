@@ -95,7 +95,7 @@ jobs:
           ALLOW_TEST_REDIS: '1'
       - name: Deploy note
         run: |
-          echo "Deploy: Docker on VPS (see scripts/deploy_vps.ps1)."
+          echo "Deploy: see compose.yml and README.md; deployment requires server environment configuration."
           echo "Env template: backend/api/.env.example — never commit secrets."
 
   admin:
@@ -103,6 +103,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check public source files
+        run: python3 scripts/check_public_source.py
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

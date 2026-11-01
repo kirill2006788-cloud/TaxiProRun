@@ -42,8 +42,7 @@ const AdminApi = (() => {
     }
     // Same host as admin panel when opened via http(s)://IP/admin/
     try {
-      if (typeof location !== 'undefined' && location.protocol.startsWith('http')
-          && location.hostname && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      if (typeof location !== 'undefined' && location.protocol.startsWith('http') && location.hostname) {
         return `${location.protocol}//${location.host}/api`;
       }
     } catch (_) { /* ignore */ }
@@ -93,34 +92,34 @@ const AdminApi = (() => {
     if (token) headers.Authorization = `Bearer ${token}`;
 
     try {
-    const res = await fetch(url, {
-      ...options,
-      headers,
-      cache: 'no-store',
-      signal: controller.signal,
-    });
+      const res = await fetch(url, {
+        ...options,
+        headers,
+        cache: 'no-store',
+        signal: controller.signal,
+      });
 
-    if (requestGeneration !== generation) throw new Error('REQUEST_CANCELLED');
-    connection('online');
+      if (requestGeneration !== generation) throw new Error('REQUEST_CANCELLED');
+      connection('online');
 
-    if (res.status === 401 && !path.includes('/admin/login')) {
-      setToken('');
-      throw new Error('AUTH_EXPIRED');
-    }
+      if (res.status === 401 && !path.includes('/admin/login')) {
+        setToken('');
+        throw new Error('AUTH_EXPIRED');
+      }
 
-    let data = null;
-    const text = await res.text();
-    try {
-      data = text ? JSON.parse(text) : null;
-    } catch {
-      throw new Error('Сервер вернул некорректный ответ. Проверьте URL API.');
-    }
+      let data = null;
+      const text = await res.text();
+      try {
+        data = text ? JSON.parse(text) : null;
+      } catch {
+        throw new Error('Сервер вернул некорректный ответ. Проверьте URL API.');
+      }
 
-    if (!res.ok) {
-      const msg = data?.message || data?.error || `HTTP ${res.status}`;
-      throw new Error(msg);
-    }
-    return data;
+      if (!res.ok) {
+        const msg = data?.message || data?.error || `HTTP ${res.status}`;
+        throw new Error(msg);
+      }
+      return data;
     } catch (error) {
       if (requestGeneration !== generation && error.message !== 'AUTH_EXPIRED') {
         throw new Error('REQUEST_CANCELLED');

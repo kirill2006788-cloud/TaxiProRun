@@ -5,6 +5,17 @@ import 'package:http/testing.dart';
 import 'package:koroli_dorog/core/api/api_client.dart';
 
 void main() {
+  test('passenger server address accepts /api without duplicating it', () {
+    final config = ApiConfigStore.instance;
+    final previous = config.baseUrl;
+    config.setBaseUrl('https://example.com/api/');
+    final client = ApiClient();
+    expect(
+        client.uri('/api/orders').toString(), 'https://example.com/api/orders');
+    client.dispose();
+    config.setBaseUrl(previous);
+  });
+
   test('a timed-out order POST is never sent twice', () async {
     var calls = 0;
     final client = ApiClient(httpClient: MockClient((request) async {

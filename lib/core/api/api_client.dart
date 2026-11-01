@@ -127,7 +127,10 @@ class ApiConfigStore extends ChangeNotifier {
 
   static final ApiConfigStore instance = ApiConfigStore._();
 
-  String _baseUrl = ApiConfig.envBaseUrl;
+  String _baseUrl = ApiConfig.envBaseUrl
+      .trim()
+      .replaceAll(RegExp(r'/+$'), '')
+      .replaceFirst(RegExp(r'/api$'), '');
   bool _useMockApi = ApiConfig.useMockApi;
 
   String get baseUrl => _baseUrl;
