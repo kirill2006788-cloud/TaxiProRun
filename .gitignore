@@ -1,0 +1,103 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# Local API keys (never commit)
+keys.local.env
+.env
+.env.local
+*.local.env
+**/key.properties
+**/*.jks
+admin/js/config.local.js
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Dependencies and build output in every component
+**/node_modules/
+**/dist/
+**/build/
+**/.test-dist/
+**/.dart_tool/
+**/.gradle/
+**/.cxx/
+**/.pub-cache-local/
+**/.flutter-plugins-dependencies
+**/ephemeral/
+**/local.properties
+.deploy_tmp/
+release-apks/
+artifacts/
+*.apk
+*.aab
+*.zip
+*.p12
+*.pem
+*.keystore
+.env.*
+!.env.example
+**/.env.*
+!**/.env.example
+**/google-services.json
+**/GoogleService-Info.plist
+**/*service-account*.json
+**/firebase-sa.json
+
+# Historical server snapshots and one-off scripts may contain credentials
+backend/api/src/_remote/
+backend/api/src/_vps_live/
+**/*.patched.ts
+backend/*.py
+admin/*.py
+admin/deploy.ps1
+scripts/*.py
+docs/SMS_SETUP.md
+
+# Unrelated exports, caches and local reports
+fan-sites/
+llcpicasso-site/
+site_exports/
+site_mirror/
+_*.*
+analyze*.txt
+flutter_*_out.txt
+flutter_*_exit.txt
+
+backend/api/pnpm-lock.yaml
+backend/api/pnpm-workspace.yaml

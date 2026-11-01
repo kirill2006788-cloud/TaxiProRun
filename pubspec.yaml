@@ -1,0 +1,77 @@
+﻿name: koroli_dorog
+description: КОРОЛИ ДОРОГ — такси и трезвый водитель
+publish_to: 'none'
+version: 1.1.4+6
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_localizations:
+    sdk: flutter
+  go_router: ^14.6.2
+  provider: ^6.1.2
+  intl: ^0.20.2
+  http: ^1.2.2
+  shared_preferences: ^2.3.3
+  permission_handler: ^11.3.1
+  geolocator: ^13.0.2
+  image_picker: ^1.1.2
+  share_plus: ^10.1.4
+  url_launcher: ^6.3.1
+  socket_io_client: ^3.1.2
+  flutter_local_notifications: ^18.0.1
+  firebase_core: ^3.15.2
+  firebase_messaging: ^15.2.10
+  google_fonts: ^6.2.1
+  connectivity_plus: ^6.1.4
+  yandex_maps_mapkit:
+    version: ^4.41.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/map/
+    - assets/images/tariffs/
+    - assets/branding/
+
+# --- Store packaging (run when Flutter SDK is available) ---
+# dart run flutter_launcher_icons
+# dart run flutter_native_splash:create
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: docs/branding/app_icon_1024.png
+  adaptive_icon_background: "#0B0B0E"
+  adaptive_icon_foreground: docs/branding/app_icon_fg.png
+  min_sdk_android: 21
+  remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#0B0B0E"
+  image: assets/branding/splash_logo.png
+  color_dark: "#0B0B0E"
+  image_dark: assets/branding/splash_logo.png
+  android: true
+  ios: true
+  android_12:
+    color: "#0B0B0E"
+    color_dark: "#0B0B0E"
+    image: assets/branding/splash_logo.png
+    image_dark: assets/branding/splash_logo.png
+    icon_background_color: "#0B0B0E"
+    icon_background_color_dark: "#0B0B0E"
+  web: false

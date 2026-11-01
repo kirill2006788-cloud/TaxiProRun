@@ -1,0 +1,128 @@
+name: CI
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  passenger:
+    name: Passenger — analyze & test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.41.5'
+          cache: true
+      - name: flutter pub get
+        run: flutter pub get
+      - name: flutter analyze
+        run: flutter analyze --no-pub
+      - name: flutter test
+        run: flutter test
+      - name: Release build note
+        run: |
+          echo "Local/CI release (secrets required):"
+          echo "  flutter build appbundle --release --dart-define=USE_MOCK_API=false ..."
+          echo "See docs/RELEASE_READINESS.md and scripts/build_release.ps1"
+
+  driver:
+    name: Driver — analyze & test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: driver_app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.41.5'
+          cache: true
+      - name: flutter pub get
+        run: flutter pub get
+      - name: flutter analyze
+        run: flutter analyze --no-pub
+      - name: flutter test
+        run: flutter test
+      - name: Release build note
+        run: |
+          echo "Local release: cd driver_app && flutter build appbundle --release"
+          echo "Or root: .\\scripts\\build_release.ps1 -DriverOnly"
+
+  backend:
+    name: Backend — build, tests and Redis integration
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    defaults:
+      run:
+        working-directory: backend/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: backend/api/package-lock.json
+      - name: npm ci
+        run: npm ci
+      - name: typecheck
+        run: npm run typecheck
+      - run: npm run build
+      - run: npm run test:unit
+      - name: Passenger, driver and admin integration
+        run: node tests/integration.cjs
+        env:
+          REDIS_URL: redis://127.0.0.1:6379/15
+          ALLOW_TEST_REDIS: '1'
+      - name: Deploy note
+        run: |
+          echo "Deploy: Docker on VPS (see scripts/deploy_vps.ps1)."
+          echo "Env template: backend/api/.env.example — never commit secrets."
+
+  admin:
+    name: Admin — API tests and desktop/mobile browser checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+        working-directory: admin
+      - run: npm test
+        working-directory: admin
+      - run: npx playwright install --with-deps chromium
+        working-directory: admin
+      - run: npm run test:ui
+        working-directory: admin
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: admin-preview
+          path: artifacts/*.png
+      - name: Required files present
+        run: |
+          test -f admin/index.html
+          test -f admin/js/app.js
+          test -f admin/css/styles.css
+          echo "Admin is static HTML/JS; serve via nginx/API host /admin/"
+          echo "No npm build step. Smoke: open /admin/ after API deploy."

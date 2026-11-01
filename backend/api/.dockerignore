@@ -1,0 +1,10 @@
+node_modules
+dist
+src/_remote
+src/_vps_live
+src/**/*.patched.ts
+npm-debug.log
+.env
+.env.*
+.test-dist
+tests

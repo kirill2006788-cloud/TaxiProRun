@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "outDir": ".test-dist" },
+  "exclude": ["src/_remote", "src/_vps_live", "src/**/*.patched.ts"]
+}

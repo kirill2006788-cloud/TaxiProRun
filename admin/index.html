@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0c10" />
+  <meta name="referrer" content="origin" />
+  <title>КОРОЛИ ДОРОГ — Админ</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0c10'/%3E%3Cpath d='M13 43l6-23 13 10 13-10 6 23H13z' fill='%23f5c518'/%3E%3Cpath d='M16 43h32v7H16z' fill='%23f5c518'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="mark">
+          <svg class="icon" viewBox="0 0 24 24" style="stroke:#111;fill:none"><path d="M5 16l2-8 5 4 5-4 2 8H5z"/><path d="M5 16h14v2H5z"/></svg>
+        </div>
+        <h1>КОРОЛИ ДОРОГ</h1>
+        <p>Панель администратора</p>
+      </div>
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginInput">Логин</label>
+          <input id="loginInput" autocomplete="username" placeholder="admin" required />
+        </div>
+        <div class="field">
+          <label for="passwordInput">Пароль</label>
+          <input id="passwordInput" type="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn btn-gold btn-block" id="loginBtn" type="submit">Войти</button>
+        <div id="loginError" class="error-box hidden" role="alert"></div>
+      </form>
+      <div class="field" style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+        <label for="apiUrlInput">URL API</label>
+        <input id="apiUrlInput" type="url" />
+        <p class="field-hint">По умолчанию тот же сервер, что и админка</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="appShell" class="app-shell hidden">
+    <div id="backdrop" class="backdrop"></div>
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="mark">
+          <svg class="icon" viewBox="0 0 24 24" style="stroke:#111;fill:none"><path d="M5 16l2-8 5 4 5-4 2 8H5z"/><path d="M5 16h14v2H5z"/></svg>
+        </div>
+        <div>
+          <strong>КОРОЛИ ДОРОГ</strong>
+          <span>Админ-панель</span>
+        </div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+      <div class="sidebar-footer">
+        <button type="button" class="btn btn-ghost btn-block btn-sm" id="logoutBtn">Выйти</button>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button type="button" class="menu-btn" id="menuBtn" aria-label="Меню">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="topbar-title" id="pageTitle">Дашборд</div>
+        <span class="badge b-muted" id="apiStatus" role="status" aria-live="polite">Подключение…</span>
+      </header>
+      <main class="content" id="content" aria-live="polite"></main>
+    </div>
+  </div>
+
+  <div id="modalBg" class="modal-bg hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-h">
+        <h3 id="modalTitle">—</h3>
+        <button type="button" class="modal-x" id="modalClose" aria-label="Закрыть окно">×</button>
+      </div>
+      <div class="modal-b" id="modalBody"></div>
+      <div class="modal-f" id="modalFooter"></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/yandex-map.js"></script>
+  <script src="js/leaflet-map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

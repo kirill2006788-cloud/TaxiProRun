@@ -1,0 +1,9 @@
+{
+  "name": "taxipro-admin",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/api.test.cjs",
+    "test:ui": "node tests/ui.cjs"
+  },
+  "devDependencies": { "playwright": "1.62.1" }
+}

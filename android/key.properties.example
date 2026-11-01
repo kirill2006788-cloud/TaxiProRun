@@ -1,0 +1,7 @@
+# Скопируйте в android/key.properties и укажите путь к release keystore.
+# Файл key.properties в .gitignore — в git не попадёт.
+
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=upload
+storeFile=../upload-keystore.jks

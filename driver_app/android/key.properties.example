@@ -1,0 +1,6 @@
+# Скопируйте в driver_app/android/key.properties
+
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=upload
+storeFile=../upload-keystore.jks
